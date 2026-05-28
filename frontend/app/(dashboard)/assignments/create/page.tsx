@@ -15,7 +15,7 @@ export default function CreateAssignment(){
             </div>
 
             </div>
-            <div className="py-12 px-22">
+            <div className="py-12 md:px-22">
                 <CreateAssignmentForm/>
             </div>
             

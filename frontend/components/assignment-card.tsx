@@ -2,27 +2,26 @@ import { EllipsisVertical } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { useRouter } from "next/navigation";
 
 export default function AssignmentCard(){
+    const router = useRouter()
     return(
         <div className="bg-white rounded-3xl p-6 ">
             <div className="flex justify-between">
                 <p className="text-2xl font-bold w-[90%]">Quiz on Electricity</p> 
                 <DropdownMenu modal={false}>
                     <DropdownMenuTrigger>
-                        <button>
-                            <EllipsisVertical className="text-[#A9A9A9]" />
-                        </button>
+                      
+                            <EllipsisVertical className="text-[#A9A9A9] cursor-pointer" />
+                       
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
                         
-                        <DropdownMenuItem>View Assignment</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => router.push("/assignments/1")}>View Assignment</DropdownMenuItem>
                         <DropdownMenuItem variant='destructive'>Delete</DropdownMenuItem>
                     
                     </DropdownMenuContent>

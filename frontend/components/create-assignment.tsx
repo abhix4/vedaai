@@ -127,7 +127,7 @@ export default function CreateAssignmentForm() {
     )
 
   return (
-    <Card className="w-full rounded-[32px] border-0 bg-[#FFFFFF80] shadow-none">
+    <Card className="w-full rounded-[32px] border-0 bg-[#FFFFFF80] shadow-none mb-40">
       <CardHeader>
         <CardTitle className="text-xl">
           Assignment Details
@@ -210,49 +210,49 @@ export default function CreateAssignmentForm() {
           />
 
           {/* Question Header */}
-          <div className="grid grid-cols-[1fr_50px_120px_120px] gap-4 px-2 text-sm font-medium text-neutral-700">
+          <div className="grid md:grid-cols-[1fr_50px_120px_120px] gap-4 px-2 text-sm font-medium text-neutral-700">
             <p>Question Type</p>
 
             <p />
 
-            <p className="text-center">
+            <p className="text-center hidden md:block">
               No. of Questions
             </p>
 
-            <p className="text-center">Marks</p>
+            <p className="text-center hidden md:block">Marks</p>
           </div>
 
           {/* Questions */}
-          <FieldGroup className="space-y-4">
+          <FieldGroup className="space-y-4 ">
             {fields.map((item, index) => (
               <div
                 key={item.id}
-                className="grid grid-cols-[1fr_50px_120px_120px] items-center gap-4"
+                className="grid grid-cols-3 md:grid-cols-[1fr_50px_120px_120px] items-center gap-4"
               >
                 {/* Type */}
                 <Controller
                   name={`questions.${index}.type`}
                   control={form.control}
                   render={({ field }) => (
-                  <div className="relative">
-  <select
-    {...field}
-    value={field.value}
-    className="
-      h-12 w-full appearance-none rounded-full
-      border-0 bg-white px-4 pr-10 text-sm
-      outline-none
-    "
-  >
-    {questionTypes.map((type) => (
-      <option key={type} value={type}>
-        {type}
-      </option>
-    ))}
-  </select>
+                  <div className="relative col-span-2 md:col-auto">
+                    <select
+                      {...field}
+                      value={field.value}
+                      className="
+                        h-12 w-full appearance-none rounded-full
+                        border-0 bg-white px-4 pr-10 text-sm
+                        outline-none
+                      "
+                    >
+                      {questionTypes.map((type) => (
+                        <option key={type} value={type}>
+                          {type}
+                        </option>
+                      ))}
+                    </select>
 
-  <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-500" />
-</div>
+                    <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-500" />
+                  </div>
                   )}
                 />
 

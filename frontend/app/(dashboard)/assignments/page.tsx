@@ -33,14 +33,18 @@ export default function Assignments(){
                     <Input  placeholder="Search Assignment" className="px-4 py-3 rounded-[100px] text-sm pl-10"/>
                 </div>
             </div>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-40 md:mb-20">
+                <AssignmentCard/>
+                <AssignmentCard/>
+                <AssignmentCard/>
+                <AssignmentCard/>
                 <AssignmentCard/>
                 <AssignmentCard/>
                 <AssignmentCard/>
                 <AssignmentCard/>
             </div>
-            <div className="bg-[#181818] w-fit px-6 py-3 rounded-[100px] fixed bottom-8 left-[53%]">
-                <button className="flex text-white gap-1 items-center cursor-pointer" onClick={() => router.push("/assignments/create")}> <Plus />Create Assignment</button>
+            <div className="bg-[#181818] w-fit p-3 md:px-6 md:py-3 rounded-[100px] fixed bottom-25 md:bottom-8 right-4 md:left-[53%]">
+                <button className="flex text-white gap-1 items-center cursor-pointer" onClick={() => router.push("/assignments/create")}> <Plus /><span className="hidden md:block">Create Assignment</span></button>
             </div>
         </div>
         
