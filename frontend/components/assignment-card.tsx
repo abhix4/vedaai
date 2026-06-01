@@ -26,7 +26,7 @@ export default function AssignmentCard({assignment}: any){
         }
     
     return(
-        <div className="bg-white rounded-3xl p-6 ">
+        <div className="bg-white flex flex-col justify-between rounded-3xl p-6 ">
             <div className="flex justify-between items-start">
                 <p className="text-2xl font-bold w-[90%]">{assignment.title}</p> 
                 <DropdownMenu modal={false}>

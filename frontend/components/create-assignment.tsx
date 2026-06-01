@@ -43,6 +43,7 @@ import {
   InputGroupTextarea,
 } from "@/components/ui/input-group"
 import { apiFetch } from "@/lib/api"
+import { useRouter } from "next/navigation"
 
 const questionTypes = [
   "Multiple Choice Questions",
@@ -66,6 +67,8 @@ const formSchema = z.object({
 })
 
 export default function CreateAssignmentForm() {
+  const [jobId, setJobId] = React.useState<number>()
+  const router = useRouter()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
 
@@ -107,13 +110,7 @@ export default function CreateAssignmentForm() {
   })
 
   async function  onSubmit(data: z.infer<typeof formSchema>) {
-    toast("Assignment Created", {
-      description: (
-        <pre className="mt-2 w-[320px] overflow-x-auto rounded-md bg-black p-4 text-white">
-          <code>{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    })
+    toast("Assignment generation in Queue")
     const response = await apiFetch(
       "/generate-question-paper",
       {
@@ -122,7 +119,9 @@ export default function CreateAssignmentForm() {
         body: JSON.stringify(data),
       }
     )
-    console.log(response)
+
+    console.log(response.data)
+    setJobId(response.data)
     console.log(data)
   }
 
@@ -136,6 +135,43 @@ export default function CreateAssignmentForm() {
       (acc, item) => acc + item.count * item.marks,
       0
     )
+    
+
+  React.useEffect(() => {
+  if (!jobId) return;
+
+  const interval = setInterval(
+    async () => {
+       const response = await apiFetch(
+      "/jobs",
+      {
+        method: "POST",
+
+        body: JSON.stringify({
+          jobId
+        }),
+      }
+    )
+
+      // const data = await res.json();
+      toast(`Assignment generation ${response.state}`,)
+
+      if (
+        response.state === "completed"
+      ) {
+        clearInterval(interval);
+
+        router.push(
+          `/papers/${response.result.paperId}`
+        );
+      }
+    },
+    2000
+  );
+
+  return () =>
+    clearInterval(interval);
+}, [jobId]);
 
   return (
     <Card className="w-full rounded-[32px] border-0 bg-[#FFFFFF80] shadow-none mb-40">

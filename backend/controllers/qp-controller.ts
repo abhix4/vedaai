@@ -62,3 +62,27 @@ export async function deleteQP(req: Request,res: Response){
         message: "Question paper deleted sucessfully!"
     })
 }
+
+export async function jobStatus(req: Request,res: Response){
+    const {jobId} = req.body;
+
+
+    const job =
+    await generationQueue.getJob(jobId);
+
+  if (!job) {
+    return res.status(404).json({
+      message: "Job not found",
+    });
+  }
+
+  const state =
+    await job.getState();
+
+  return res.json({
+    state,
+    progress: job.progress,
+    result: job.returnvalue,
+    failedReason: job.failedReason,
+  });
+}

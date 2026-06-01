@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Bricolage_Grotesque, Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { Toaster } from "sonner";
 
 const inter = Inter({subsets:['latin'],variable:'--font-sans'});
 
@@ -36,7 +37,11 @@ export default function RootLayout({
       lang="en"
       className={cn("h-full", "antialiased", bricolage.className, "font-sans", inter.variable)}
     >
-      <body className="flex flex-col bg-[#EEEEEE]">{children}</body>
+      
+      <body className="flex flex-col bg-[#EEEEEE]">
+      {children}
+      <Toaster/>
+      </body>
     </html>
   );
 }

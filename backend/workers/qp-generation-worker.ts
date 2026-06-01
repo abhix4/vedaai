@@ -38,6 +38,9 @@ async function startWorker(){
             createdBy: job.data.createdBy
           })
         console.log(paper)
+        return {
+          paperId: paper._id,
+        };
 
         } catch (error) {
           console.log(error)
@@ -50,11 +53,13 @@ async function startWorker(){
         );
 
         console.log("Paper generated");
+        
       },
 
       {
         connection,
       }
+      
     );
 
   console.log("Worker started");
