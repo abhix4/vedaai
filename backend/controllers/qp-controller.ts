@@ -6,15 +6,15 @@ import { QuestionPaper } from "../db/qpSchema";
 export async function generateQP(req: Request, res: Response){
     const {
         dueDate,
-        questionType,
-        additionalInstruction
+        questions,
+        additionalInfo
     }  = req.body;
 
 
     const job = await generationQueue.add('generate-paper', {
         dueDate,
-        questionType,
-        additionalInstruction,
+        questionType: questions,
+        additionalInstruction: additionalInfo,
         createdBy: '6a15878b55ed0527d4f76233'
     })
     if(!job){
@@ -37,6 +37,16 @@ export async function listQP(req: Request,res: Response){
         allQuestionPapers
     })
 }
+
+export async function getQP(req: Request,res: Response){
+    const {qpId} = req.body;
+    const response = await QuestionPaper.findOne({_id: qpId});
+
+    return res.status(200).json({
+        response
+    })
+}
+
 
 export async function deleteQP(req: Request,res: Response){
     const {qpId} = req.body;

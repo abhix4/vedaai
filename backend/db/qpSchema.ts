@@ -9,7 +9,6 @@ const QuestionSchema = new mongoose.Schema({
 
   type: {
     type: String,
-    enum: ["mcq", "short", "long"],
     required: true,
   },
 
@@ -43,7 +42,6 @@ const SectionSchema = new mongoose.Schema({
 
   type: {
     type: String,
-    enum: ["mcq", "short", "long"],
     required: true,
   },
 
@@ -69,6 +67,10 @@ const QuestionPaperSchema = new mongoose.Schema(
       type: String,
       trim: true
 
+    },
+    dueDate: {
+      type: Date,
+      required: true
     },
     subject: {
       type: String,

@@ -42,6 +42,7 @@ import {
   InputGroupText,
   InputGroupTextarea,
 } from "@/components/ui/input-group"
+import { apiFetch } from "@/lib/api"
 
 const questionTypes = [
   "Multiple Choice Questions",
@@ -105,7 +106,7 @@ export default function CreateAssignmentForm() {
     name: "questions",
   })
 
-  function onSubmit(data: z.infer<typeof formSchema>) {
+  async function  onSubmit(data: z.infer<typeof formSchema>) {
     toast("Assignment Created", {
       description: (
         <pre className="mt-2 w-[320px] overflow-x-auto rounded-md bg-black p-4 text-white">
@@ -113,6 +114,16 @@ export default function CreateAssignmentForm() {
         </pre>
       ),
     })
+    const response = await apiFetch(
+      "/generate-question-paper",
+      {
+        method: "POST",
+
+        body: JSON.stringify(data),
+      }
+    )
+    console.log(response)
+    console.log(data)
   }
 
   const totalQuestions = form

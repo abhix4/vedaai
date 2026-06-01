@@ -3,9 +3,31 @@ import AssignmentCard from "@/components/assignment-card";
 import { Funnel, Plus, Search } from "lucide-react";
 import { Input } from "@/components/ui/input"
 import { useRouter } from "next/navigation";
+import { apiFetch } from "@/lib/api";
+import { useEffect, useState } from "react";
 
 export default function Assignments(){
-    const router = useRouter()
+    const router = useRouter();
+    const [assignments, setAssignments] = useState<any []>([])
+
+    async function getAssignments() {
+        const response = await apiFetch(
+              "/all-question-paper",
+              {
+                method: "POST",
+                body: JSON.stringify({
+                    userId: '6a15878b55ed0527d4f76233'
+                })
+              }
+            )
+        setAssignments(response.allQuestionPapers)
+        console.log(response)
+    }
+
+    useEffect(() => {
+        getAssignments()
+        
+    },[])
     return (
         <div className="flex flex-col space-y-4">
             <div className="flex items-center ml-1 gap-3">
@@ -34,14 +56,17 @@ export default function Assignments(){
                 </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-40 md:mb-20">
+                {
+                    assignments.map((assignment: any, index: number) => <AssignmentCard assignment={assignment} key={index}/>)
+                }
+                {/* <AssignmentCard/>
                 <AssignmentCard/>
                 <AssignmentCard/>
                 <AssignmentCard/>
                 <AssignmentCard/>
                 <AssignmentCard/>
                 <AssignmentCard/>
-                <AssignmentCard/>
-                <AssignmentCard/>
+                <AssignmentCard/> */}
             </div>
             <div className="bg-[#181818] w-fit p-3 md:px-6 md:py-3 rounded-[100px] fixed bottom-25 md:bottom-8 right-4 md:left-[53%]">
                 <button className="flex text-white gap-1 items-center cursor-pointer" onClick={() => router.push("/assignments/create")}> <Plus /><span className="hidden md:block">Create Assignment</span></button>

@@ -90,7 +90,9 @@ const questionPaper = {
   ],
 }
 
-export default function QuestionPaperTemplate() {
+export default function QuestionPaperTemplate({ assignment }: any) {
+
+  console.log('props: ', assignment)
   const styles = StyleSheet.create({
     page: {
       padding: 30,
@@ -153,6 +155,7 @@ export default function QuestionPaperTemplate() {
       fontSize: 20,
       textAlign: "center",
       marginBottom: 24,
+      marginTop: 24,
       fontWeight: "bold",
     },
 
@@ -218,27 +221,27 @@ export default function QuestionPaperTemplate() {
         <View style={styles.container}>
           {/* Header */}
           <Text style={styles.schoolName}>
-            {questionPaper.school}
+            {assignment?.title || questionPaper.school}
           </Text>
 
           <Text style={styles.centeredText}>
-            Subject: {questionPaper.subject}
+            Subject: {assignment?.subject}
           </Text>
 
           <Text style={styles.centeredText}>
-            Class: {questionPaper.class}
+            Class: {assignment?.class}
           </Text>
 
           {/* Top Info */}
           <View style={styles.topRow}>
             <Text>
               Time Allowed:{" "}
-              {questionPaper.duration}
+              {assignment.duration}
             </Text>
 
             <Text>
               Maximum Marks:{" "}
-              {questionPaper.totalMarks}
+              {assignment.totalMarks}
             </Text>
           </View>
 
@@ -272,19 +275,19 @@ export default function QuestionPaperTemplate() {
           </View>
 
           {/* Sections */}
-          {questionPaper.sections.map(
-            (section, sectionIndex) => (
+          {assignment?.sections.map(
+            (section: any, sectionIndex: number) => (
               <View key={sectionIndex}>
                 <Text
                   style={styles.sectionHeading}
                 >
-                  {section.section}
+                  Section: {section.section}
                 </Text>
 
                 <Text
                   style={styles.questionTitle}
                 >
-                  {section.title}
+                  {section?.type}
                 </Text>
 
                 <Text
@@ -292,11 +295,11 @@ export default function QuestionPaperTemplate() {
                     styles.questionInstruction
                   }
                 >
-                  {section.instructions}
+                  {section?.instructions}
                 </Text>
 
-                {section.questions.map(
-                  (question, index) => (
+                {section?.questions.map(
+                  (question: any, index: number) => (
                     <View
                       key={index}
                       style={
@@ -328,21 +331,21 @@ export default function QuestionPaperTemplate() {
                   )
                 )}
 
-                <Text style={styles.footerText}>
+                {/* <Text style={styles.footerText}>
                   End of Question Paper
-                </Text>
+                </Text> */}
 
                 {/* Answer Key */}
-                <Text
+                {/* <Text
                   style={
                     styles.answerKeyHeading
                   }
                 >
                   Answer Key:
-                </Text>
+                </Text> */}
 
-                {section.answers.map(
-                  (answer, index) => (
+                {/* {section.answers.map(
+                  (answer: any, index: number) => (
                     <View
                       key={index}
                       style={
@@ -366,7 +369,7 @@ export default function QuestionPaperTemplate() {
                       </Text>
                     </View>
                   )
-                )}
+                )} */}
               </View>
             )
           )}

@@ -23,9 +23,9 @@ async function startWorker(){
 
         /// job here
 
-        const paper:any = await generateQuestionPaper(job.data.dueDate, job.data.questionType, job.data.additionalInstruction);
 
         try {
+        const paper:any = await generateQuestionPaper(job.data.dueDate, job.data.questionType, job.data.additionalInstruction);
           
           await QuestionPaper.create({
             title: paper.title,
@@ -34,13 +34,15 @@ async function startWorker(){
             totalMarks: paper.totalMarks,
             duration: paper.duration,
             sections: paper.sections,
+            dueDate: job.data.dueDate,
             createdBy: job.data.createdBy
           })
+        console.log(paper)
+
         } catch (error) {
           console.log(error)
         }
         
-        console.log(paper)
 
         
         await new Promise((resolve) =>

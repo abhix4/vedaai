@@ -6,13 +6,29 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { useRouter } from "next/navigation";
+import { apiFetch } from "@/lib/api";
 
-export default function AssignmentCard(){
+export default function AssignmentCard({assignment}: any){
     const router = useRouter()
+
+    async function deleteQP() {
+            const response = await apiFetch(
+                  "/delete-question-paper",
+                  {
+                    method: "POST",
+                    body: JSON.stringify({
+                        qpId: assignment._id
+                    })
+                  }
+                )
+            // setAssignments(response.allQuestionPapers)
+            console.log(response)
+        }
+    
     return(
         <div className="bg-white rounded-3xl p-6 ">
-            <div className="flex justify-between">
-                <p className="text-2xl font-bold w-[90%]">Quiz on Electricity</p> 
+            <div className="flex justify-between items-start">
+                <p className="text-2xl font-bold w-[90%]">{assignment.title}</p> 
                 <DropdownMenu modal={false}>
                     <DropdownMenuTrigger>
                       
@@ -21,8 +37,8 @@ export default function AssignmentCard(){
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
                         
-                        <DropdownMenuItem onClick={() => router.push("/assignments/1")}>View Assignment</DropdownMenuItem>
-                        <DropdownMenuItem variant='destructive'>Delete</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => router.push(`/assignments/${assignment._id}`)}>View Assignment</DropdownMenuItem>
+                        <DropdownMenuItem variant='destructive' onClick={deleteQP}>Delete</DropdownMenuItem>
                     
                     </DropdownMenuContent>
                 </DropdownMenu>
@@ -30,7 +46,7 @@ export default function AssignmentCard(){
          
             <div className="flex justify-between mt-10">
                 <p><span className="font-medium">Assigned on</span> : 20-06-2025</p>
-                <p><span className="font-medium">Due</span> : 21-06-2025</p>
+                <p><span className="font-medium">Due</span> : { new Date(assignment?.dueDate).toLocaleDateString()}</p>
             </div>
             
            
